@@ -14,6 +14,7 @@ public class ControleTiro : MonoBehaviour {
 	void Start () {
 
         anim = GetComponent<Animator>();
+        //lala
 
         rbBullet = GetComponent<Rigidbody2D>();
         speed = speed * transform.localScale.x;
