@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        //Implementar Pulo Aqui! 
+         
         tocaChao = Physics2D.Linecast(transform.position, posPe.position, 1 << LayerMask.NameToLayer("chao"));
 
         if (Input.GetKeyDown("space") && tocaChao){
@@ -72,18 +72,19 @@ public class PlayerController : MonoBehaviour {
 		} else if (translationX < 0 && viradoDireita) {
 			Flip();
 		}
-
+        //programação do tiro
         if (shootCooldown > 0)
             shootCooldown -= Time.deltaTime;
-
+        //programação da animação atirando
         if (Input.GetButtonDown ("Fire1"))
         {
             Fire();
             shootCooldown = shootingRate;
+            anim.SetTrigger("fire");
         }
 
 	}
-    
+    // instanciação do tiro
     void Fire()
     {
         if (shootCooldown <= 0f)

@@ -21,7 +21,7 @@ public class ControleTiro : MonoBehaviour {
         Destroy (gameObject, 10f);
 
         Physics2D.IgnoreLayerCollision(9, 9);
-
+        // selecionar randomicamnte som da lista de 20 itens
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = sounds[Random.Range(0, sounds.Length)];
         audioSource.Play();
