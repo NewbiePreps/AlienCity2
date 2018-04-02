@@ -13,12 +13,8 @@ public class MudarCor : MonoBehaviour {
         sr = GetComponent<SpriteRenderer> ();
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-        void OnTriggerEnter2D(Collider2D other){
+
+    void OnTriggerEnter2D(Collider2D other){
         if (valPedra == 2)
         {
             valPedra = 0;
