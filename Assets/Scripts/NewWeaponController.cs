@@ -7,19 +7,17 @@ public class NewWeaponController : MonoBehaviour {
     //criação da imagem do user interface (arma)
     public Image uiArma;
 
-	// Use this for initialization
-	void Start () {
-        //imagem não aparecer até ser chamada
-        uiArma.gameObject.SetActive(false);
+    // Use this for initialization
+    void Start () {
+       
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
+    // Update is called once per frame
+    void Update()
+    {
+    }    
 
     void OnTriggerEnter2D(Collider2D other){
         //colisão com o player vai acarretar no aparecimento da armana no HUD e da destruição dela no mapa

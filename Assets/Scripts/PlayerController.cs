@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
 
 public class PlayerController : MonoBehaviour {
 
@@ -23,33 +25,59 @@ public class PlayerController : MonoBehaviour {
     private float shootingRate = 0.1f;
     private float shootCooldown = 0f;
     public Transform spawnBullet;
-    public GameObject bullet;
+    
+    //armas ativas
+    public static string activeWeaponType;
+    public List<GameObject> hudWeapons;
+    int activeGunIndex;
+    public List<GameObject> bulletType;
 
-
-
-	void Start () {
+    void Start () {
 		anim = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();
+        //GameObject mensagemControleObject = GameObject.FindWithTag ("MensagemControle");
+        //if (mensagemControleObject != null) {
+        //MC = mensagemControleObject.GetComponent<MensagemControle> ();
+        SetWeapon(0);
 
-		GameObject mensagemControleObject = GameObject.FindWithTag ("MensagemControle");
-		if (mensagemControleObject != null) {
-			MC = mensagemControleObject.GetComponent<MensagemControle> ();
-		}
-	}
-	
-    
+    }
 
-	// Update is called once per frame
-	void Update () {
+    private void SetWeapon(int v)
+    {
+        activeGunIndex = v;
+        for (int i = 0; i < hudWeapons.Count; i++)
+        {
+            hudWeapons[i].SetActive(false);
+        }
+        hudWeapons[activeGunIndex].SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update () {
          
         tocaChao = Physics2D.Linecast(transform.position, posPe.position, 1 << LayerMask.NameToLayer("chao"));
 
         if (Input.GetKeyDown("space") && tocaChao){
             jump = true;
         }
-	}
+        if (Input.GetKeyDown("1"))
+        {
+            SetWeapon(0);
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            SetWeapon(1);
+        }
 
-	void FixedUpdate()
+    }
+
+    //public GameObject GetActiveWeapon()
+    //{
+    //    return activeGun;
+    //}
+
+
+    void FixedUpdate()
 	{
 		float translationY = 0;
 		float translationX = Input.GetAxis ("Horizontal") * Velocidade;
@@ -78,9 +106,9 @@ public class PlayerController : MonoBehaviour {
         //programação da animação atirando
         if (Input.GetButtonDown ("Fire1"))
         {
+            
             Fire();
             shootCooldown = shootingRate;
-            anim.SetTrigger("fire");
         }
 
 	}
@@ -89,13 +117,12 @@ public class PlayerController : MonoBehaviour {
     {
         if (shootCooldown <= 0f)
         {
-            if (bullet != null)
-            {
+            var cloneBullet = Instantiate (bulletType [activeGunIndex], spawnBullet.position, Quaternion.identity) as GameObject;
+            cloneBullet.transform.localScale = this.transform.localScale;
 
-                var cloneBullet = Instantiate(bullet, spawnBullet.position, Quaternion.identity) as GameObject;
-                cloneBullet.transform.localScale = this.transform.localScale;
-            }
-
+            cloneBullet.GetComponent<BaseBullet>().Fire(transform.localScale.x > 0 ? 1 : -1);
+            
+            anim.SetTrigger("fire");
         }
 
 

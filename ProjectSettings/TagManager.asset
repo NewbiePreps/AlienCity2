@@ -10,6 +10,7 @@ TagManager:
   - pedra1
   - pedra2
   - pedra3
+  - Pistol
   layers:
   - Default
   - TransparentFX
